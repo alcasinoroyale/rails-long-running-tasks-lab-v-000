@@ -45,10 +45,17 @@ class SongsController < ApplicationController
     redirect_to songs_path
   end
 
+  def upload
+    CSV.foreach(params[:leads].path, headers: true) do |lead|
+    Song.create(title: song[0], artist_name: lead[1])
+    end
+  redirect_to customers_path
+end
+
+
   private
 
   def song_params
     params.require(:song).permit(:title, :artist_name)
   end
 end
-
